@@ -9,3 +9,5 @@ SleekySnip is a simple example project that targets Windows 10 and later using .
 
 Once these prerequisites are installed, open `SleekySnip.sln` in Visual Studio 2022 and build the solution.
 
+The `PreferencePane` project outputs a self-contained WinUI application similar to PowerToys.
+
