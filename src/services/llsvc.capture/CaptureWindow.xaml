@@ -1,0 +1,11 @@
+<Window x:Class="LLSvc.Capture.CaptureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Capture" Height="200" Width="300">
+    <StackPanel Margin="20">
+        <TextBlock Text="Select capture mode:" Margin="0,0,0,10" />
+        <Button Content="Area" Margin="0,0,0,5" />
+        <Button Content="Window" Margin="0,0,0,5" />
+        <Button Content="Screen" />
+    </StackPanel>
+</Window>
