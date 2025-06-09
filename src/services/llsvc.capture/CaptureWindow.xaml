@@ -4,8 +4,9 @@
         Title="Capture" Height="200" Width="300">
     <StackPanel Margin="20">
         <TextBlock Text="Select capture mode:" Margin="0,0,0,10" />
-        <Button Content="Area" Margin="0,0,0,5" />
-        <Button Content="Window" Margin="0,0,0,5" />
-        <Button Content="Screen" />
+        <Button Content="Window" Margin="0,0,0,5" Click="Window_Click" />
+        <Button Content="Full Screen" Margin="0,0,0,5" Click="Screen_Click" />
+        <Button Content="Area" Margin="0,0,0,5" Click="Area_Click" />
+        <Button Content="Cancel" Click="Cancel_Click" />
     </StackPanel>
 </Window>

@@ -38,7 +38,7 @@ namespace LLSvc.Capture
             if (_source != null)
             {
                 _source.RemoveHook(HwndHook);
-                var helper = new WindowInteropHelper(_messageWindow);
+                var helper = new WindowInteropHelper(_messageWindow!);
                 HotKeyManager.Unregister(helper.Handle);
             }
             base.OnExit(e);
@@ -47,22 +47,46 @@ namespace LLSvc.Capture
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             const int WM_HOTKEY = 0x0312;
-            if (msg == WM_HOTKEY && wParam.ToInt32() == HotKeyManager.HOTKEY_ID)
+            if (msg == WM_HOTKEY)
             {
-                var captureWindow = new CaptureWindow();
-                captureWindow.Show();
+                var id = (HotkeyId)wParam.ToInt32();
+                switch (id)
+                {
+                    case HotkeyId.Window:
+                        CaptureManager.CaptureWindow(includeShadow: true);
+                        break;
+                    case HotkeyId.FullScreen:
+                        CaptureManager.CaptureFullScreen();
+                        break;
+                    case HotkeyId.Area:
+                        CaptureManager.CaptureArea(new Rect());
+                        break;
+                    case HotkeyId.Flyout:
+                        CaptureManager.ShowFlyout();
+                        break;
+                }
                 handled = true;
             }
             return IntPtr.Zero;
         }
     }
 
+    internal enum HotkeyId
+    {
+        Window = 1,
+        FullScreen,
+        Area,
+        Flyout
+    }
+
     internal static class HotKeyManager
     {
-        public const int HOTKEY_ID = 9000;
-        private const uint MOD_CONTROL = 0x0002;
+        private const uint MOD_ALT = 0x0001;
         private const uint MOD_SHIFT = 0x0004;
-        private const uint VK_S = 0x53; // S key
+        private const uint VK_NUMPAD4 = 0x64;
+        private const uint VK_NUMPAD1 = 0x61;
+        private const uint VK_3 = 0x33;
+        private const uint VK_NUMPAD5 = 0x65;
 
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
@@ -70,14 +94,20 @@ namespace LLSvc.Capture
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        public static bool Register(IntPtr handle)
+        public static void Register(IntPtr handle)
         {
-            return RegisterHotKey(handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT, VK_S);
+            RegisterHotKey(handle, (int)HotkeyId.Window, MOD_ALT | MOD_SHIFT, VK_NUMPAD4);
+            RegisterHotKey(handle, (int)HotkeyId.FullScreen, MOD_ALT | MOD_SHIFT, VK_NUMPAD1);
+            RegisterHotKey(handle, (int)HotkeyId.Area, MOD_ALT | MOD_SHIFT, VK_3);
+            RegisterHotKey(handle, (int)HotkeyId.Flyout, MOD_ALT | MOD_SHIFT, VK_NUMPAD5);
         }
 
         public static void Unregister(IntPtr handle)
         {
-            UnregisterHotKey(handle, HOTKEY_ID);
+            foreach (HotkeyId id in Enum.GetValues(typeof(HotkeyId)))
+            {
+                UnregisterHotKey(handle, (int)id);
+            }
         }
     }
 }
