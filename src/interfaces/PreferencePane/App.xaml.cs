@@ -43,8 +43,10 @@ namespace PreferencePane
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
-            _window.Activate();
+            // Start the service without showing any UI. The capture window
+            // will be displayed when the registered hotkey triggers
+            // CaptureManager.ShowFlyout().
+            CaptureManager.Initialize();
         }
     }
 }
