@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferencePane", "src\interfaces\prefpane.ui\PrefrencePane\PreferencePane.csproj", "{EF550CA2-2C67-407E-981E-A0C23593AEBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferencePane", "src\interfaces\PreferencePane\PreferencePane.csproj", "{EF550CA2-2C67-407E-981E-A0C23593AEBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
