@@ -3,7 +3,7 @@ using Windows.System;
 using SleekySnip.Core;
 using System.IO;
 using System.Runtime.InteropServices;
-using Llsvc.KeyboardListener;
+using llsvc.KeyboardListener;
 
 namespace PreferencePane;
 
@@ -39,6 +39,9 @@ public static class CaptureManager
         RegisterHotkey(_settings.WindowHotkey, "window");
         RegisterHotkey(_settings.RegionHotkey, "region");
 
+        _listener = new KeyboardListener();
+        _listener.SetProcessCommand(id => ShowFlyout());
+        _listener.SetHotkeyAction(win: false, ctrl: false, shift: false, alt: false, key: (byte)key, id: "capture");
         _listener.Start();
 
         Application.Current.Exit += OnAppExit;
