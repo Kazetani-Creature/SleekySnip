@@ -21,6 +21,8 @@ public static class SleekySnipSettingsSerializer
             settings.Hotkey = root["Hotkey"]!.InnerText;
         if (root["CaptureMode"] != null)
             settings.CaptureMode = root["CaptureMode"]!.InnerText;
+        if (root["OutputFolder"] != null)
+            settings.OutputFolder = root["OutputFolder"]!.InnerText;
         return settings;
     }
 
@@ -40,6 +42,10 @@ public static class SleekySnipSettingsSerializer
         var capture = doc.CreateElement("CaptureMode");
         capture.InnerText = settings.CaptureMode;
         root.AppendChild(capture);
+
+        var folder = doc.CreateElement("OutputFolder");
+        folder.InnerText = settings.OutputFolder;
+        root.AppendChild(folder);
 
         var xmlWriterSettings = new XmlWriterSettings { Indent = true };
         using var writer = XmlWriter.Create(path, xmlWriterSettings);
