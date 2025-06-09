@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferencePane", "src\inter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleekySnip.Core", "src\SleekySnip.Core\SleekySnip.Core.csproj", "{74A931F5-F4B8-4084-BF93-39AF9B73E11F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "llsvc.keyboardlistener", "src\services\llsvc.keyboardlistener\llsvc.keyboardlistener.csproj", "{91A04BAD-68ED-4140-9922-3AECD58B5DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -53,8 +55,26 @@ Global
                 {74A931F5-F4B8-4084-BF93-39AF9B73E11F}.Release|x86.ActiveCfg = Release|x86
                 {74A931F5-F4B8-4084-BF93-39AF9B73E11F}.Release|x86.Build.0 = Release|x86
                 {74A931F5-F4B8-4084-BF93-39AF9B73E11F}.Release|x86.Deploy.0 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|ARM64.ActiveCfg = Debug|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|ARM64.Build.0 = Debug|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|ARM64.Deploy.0 = Debug|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x64.ActiveCfg = Debug|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x64.Build.0 = Debug|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x64.Deploy.0 = Debug|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x86.ActiveCfg = Debug|x86
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x86.Build.0 = Debug|x86
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Debug|x86.Deploy.0 = Debug|x86
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|ARM64.ActiveCfg = Release|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|ARM64.Build.0 = Release|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|ARM64.Deploy.0 = Release|ARM64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x64.ActiveCfg = Release|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x64.Build.0 = Release|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x64.Deploy.0 = Release|x64
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x86.ActiveCfg = Release|x86
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x86.Build.0 = Release|x86
+                {91A04BAD-68ED-4140-9922-3AECD58B5DEE}.Release|x86.Deploy.0 = Release|x86
+        EndGlobalSection
+        GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
