@@ -2,4 +2,5 @@
 <SleekySnipSettings>
   <Hotkey>PrintScreen</Hotkey>
   <CaptureMode>Region</CaptureMode>
+  <OutputFolder></OutputFolder>
 </SleekySnipSettings>
