@@ -15,6 +15,18 @@
 
     <Grid>
         <StackPanel Margin="20" Spacing="10">
+            <TextBlock Text="Screen Capture Hotkey" />
+            <TextBox x:Name="ScreenHotkeyTextBox" Width="300"
+                     TextChanged="ScreenHotkeyTextBox_TextChanged" />
+
+            <TextBlock Text="Window Capture Hotkey" />
+            <TextBox x:Name="WindowHotkeyTextBox" Width="300"
+                     TextChanged="WindowHotkeyTextBox_TextChanged" />
+
+            <TextBlock Text="Region Capture Hotkey" />
+            <TextBox x:Name="RegionHotkeyTextBox" Width="300"
+                     TextChanged="RegionHotkeyTextBox_TextChanged" />
+
             <TextBlock Text="Output Folder" />
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <TextBox x:Name="OutputFolderTextBox" Width="300" />

@@ -1,36 +1,17 @@
 using Microsoft.UI.Xaml;
-using System.Windows.Forms;
 using Windows.System;
 using SleekySnip.Core;
 using System.IO;
+using System.Runtime.InteropServices;
+using Llsvc.KeyboardListener;
 
 namespace PreferencePane;
 
 public static class CaptureManager
 {
     private static CaptureWindow? _window;
-    private static HotKeyRegistrar? _registrar;
-    private static MessageWindow? _messageWindow;
-
-    private const int WM_HOTKEY = 0x0312;
-
-    private sealed class MessageWindow : NativeWindow
-    {
-        public MessageWindow()
-        {
-            CreateHandle(new CreateParams());
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == WM_HOTKEY)
-            {
-                ShowFlyout();
-            }
-
-            base.WndProc(ref m);
-        }
-    }
+    private static KeyboardListener? _listener;
+    private static SleekySnipSettings? _settings;
 
     public static void ShowFlyout()
     {
@@ -45,28 +26,81 @@ public static class CaptureManager
 
     public static void Initialize()
     {
-        if (_messageWindow != null)
+        if (_listener != null)
             return;
 
-        _messageWindow = new MessageWindow();
-
         var settingsPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "resources", "SleekySnip.props");
-        var settings = SleekySnip.Core.SleekySnipSettingsSerializer.Load(settingsPath);
+        _settings = SleekySnip.Core.SleekySnipSettingsSerializer.Load(settingsPath);
 
-        VirtualKey key = VirtualKey.Snapshot;
-        Enum.TryParse(settings.Hotkey, out key);
+        _listener = new KeyboardListener();
+        _listener.SetProcessCommand(ProcessCommand);
 
-        _registrar = new SleekySnip.Core.HotKeyRegistrar(_messageWindow.Handle);
-        _registrar.TryRegister(0, (uint)key);
+        RegisterHotkey(_settings.ScreenHotkey, "screen");
+        RegisterHotkey(_settings.WindowHotkey, "window");
+        RegisterHotkey(_settings.RegionHotkey, "region");
+
+        _listener.Start();
 
         Application.Current.Exit += OnAppExit;
     }
 
     private static void OnAppExit(object sender, object e)
     {
-        _registrar?.Dispose();
-        _registrar = null;
-        _messageWindow?.DestroyHandle();
-        _messageWindow = null;
+        _listener?.Dispose();
+        _listener = null;
     }
+
+    private static void RegisterHotkey(string text, string id)
+    {
+        if (_listener == null)
+            return;
+
+        ParseHotkey(text, out bool win, out bool ctrl, out bool shift, out bool alt, out VirtualKey key);
+        _listener.SetHotkeyAction(win, ctrl, shift, alt, (byte)key, id);
+    }
+
+    private static void ProcessCommand(string id)
+    {
+        if (_settings == null)
+            return;
+
+        string? file = string.IsNullOrWhiteSpace(_settings.OutputFolder)
+            ? null
+            : Path.Combine(_settings.OutputFolder, $"screenshot_{DateTime.Now:yyyyMMdd_HHmmss}.png");
+
+        switch (id)
+        {
+            case "screen":
+                _ = CaptureService.CaptureScreenAsync(file);
+                break;
+            case "window":
+                nint hwnd = GetForegroundWindow();
+                if (hwnd != nint.Zero)
+                    _ = CaptureService.CaptureWindowAsync(hwnd, file);
+                break;
+            case "region":
+                ShowFlyout();
+                break;
+        }
+    }
+
+    private static void ParseHotkey(string text, out bool win, out bool ctrl, out bool shift, out bool alt, out VirtualKey key)
+    {
+        win = ctrl = shift = alt = false;
+        key = VirtualKey.None;
+        foreach (var token in text.Split('+', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var part = token.Trim();
+            if (part.Equals("win", StringComparison.OrdinalIgnoreCase)) win = true;
+            else if (part.Equals("ctrl", StringComparison.OrdinalIgnoreCase) || part.Equals("control", StringComparison.OrdinalIgnoreCase)) ctrl = true;
+            else if (part.Equals("shift", StringComparison.OrdinalIgnoreCase)) shift = true;
+            else if (part.Equals("alt", StringComparison.OrdinalIgnoreCase)) alt = true;
+            else if (Enum.TryParse(part, true, out VirtualKey parsed)) key = parsed;
+        }
+        if (key == VirtualKey.None)
+            key = VirtualKey.Snapshot;
+    }
+
+    [DllImport("user32.dll")]
+    private static extern nint GetForegroundWindow();
 }

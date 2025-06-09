@@ -17,8 +17,12 @@ public static class SleekySnipSettingsSerializer
         if (root == null)
             return settings;
 
-        if (root["Hotkey"] != null)
-            settings.Hotkey = root["Hotkey"]!.InnerText;
+        if (root["ScreenHotkey"] != null)
+            settings.ScreenHotkey = root["ScreenHotkey"]!.InnerText;
+        if (root["WindowHotkey"] != null)
+            settings.WindowHotkey = root["WindowHotkey"]!.InnerText;
+        if (root["RegionHotkey"] != null)
+            settings.RegionHotkey = root["RegionHotkey"]!.InnerText;
         if (root["CaptureMode"] != null)
             settings.CaptureMode = root["CaptureMode"]!.InnerText;
         if (root["OutputFolder"] != null)
@@ -35,9 +39,17 @@ public static class SleekySnipSettingsSerializer
         var root = doc.CreateElement("SleekySnipSettings");
         doc.AppendChild(root);
 
-        var hotkey = doc.CreateElement("Hotkey");
-        hotkey.InnerText = settings.Hotkey;
-        root.AppendChild(hotkey);
+        var screen = doc.CreateElement("ScreenHotkey");
+        screen.InnerText = settings.ScreenHotkey;
+        root.AppendChild(screen);
+
+        var window = doc.CreateElement("WindowHotkey");
+        window.InnerText = settings.WindowHotkey;
+        root.AppendChild(window);
+
+        var region = doc.CreateElement("RegionHotkey");
+        region.InnerText = settings.RegionHotkey;
+        root.AppendChild(region);
 
         var capture = doc.CreateElement("CaptureMode");
         capture.InnerText = settings.CaptureMode;

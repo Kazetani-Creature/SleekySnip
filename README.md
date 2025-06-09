@@ -2,6 +2,8 @@
 
 SleekySnip is a simple example project that targets Windows 10 and later using .NET 8 and WinUI.
 
+The repository includes a low level keyboard listener service (`llsvc.keyboardlistener`) used for capturing global hotkeys.  The preference pane starts this listener at launch and lets you configure hotkeys for screen, window, and region capture.
+
 ## Prerequisites
 
 - **Windows 10 or later** – this project requires the Windows 10 SDK and features available on Windows 10 and newer.

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SleekySnipSettings>
-  <Hotkey>PrintScreen</Hotkey>
+  <ScreenHotkey>PrintScreen</ScreenHotkey>
+  <WindowHotkey>Alt+PrintScreen</WindowHotkey>
+  <RegionHotkey>Win+Shift+S</RegionHotkey>
   <CaptureMode>Region</CaptureMode>
   <OutputFolder></OutputFolder>
 </SleekySnipSettings>

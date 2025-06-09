@@ -32,6 +32,9 @@ namespace PreferencePane
         {
             InitializeComponent();
             _settings = SleekySnip.Core.SleekySnipSettingsSerializer.Load(_settingsPath);
+            ScreenHotkeyTextBox.Text = _settings.ScreenHotkey;
+            WindowHotkeyTextBox.Text = _settings.WindowHotkey;
+            RegionHotkeyTextBox.Text = _settings.RegionHotkey;
             OutputFolderTextBox.Text = _settings.OutputFolder;
         }
 
@@ -48,6 +51,24 @@ namespace PreferencePane
                 OutputFolderTextBox.Text = _settings.OutputFolder;
                 SleekySnip.Core.SleekySnipSettingsSerializer.Save(_settings, _settingsPath);
             }
+        }
+
+        private void ScreenHotkeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.ScreenHotkey = ScreenHotkeyTextBox.Text;
+            SleekySnip.Core.SleekySnipSettingsSerializer.Save(_settings, _settingsPath);
+        }
+
+        private void WindowHotkeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.WindowHotkey = WindowHotkeyTextBox.Text;
+            SleekySnip.Core.SleekySnipSettingsSerializer.Save(_settings, _settingsPath);
+        }
+
+        private void RegionHotkeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.RegionHotkey = RegionHotkeyTextBox.Text;
+            SleekySnip.Core.SleekySnipSettingsSerializer.Save(_settings, _settingsPath);
         }
     }
 }
