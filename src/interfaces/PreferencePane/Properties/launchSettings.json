@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PreferencePane (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PreferencePane (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
